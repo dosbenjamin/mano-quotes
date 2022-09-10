@@ -31,7 +31,7 @@ export default class VerifyUserValidator {
         column: 'email'
       })
     ]),
-    password: schema.string()
+    password: schema.string({})
   })
 
   /**
@@ -47,6 +47,7 @@ export default class VerifyUserValidator {
    */
   public messages: CustomMessages = {
     'required': '{{ field }} is required to log in',
+    'email.email': 'Email is not valid',
     'email.exists': 'There is no user registered with that email address'
   }
 }

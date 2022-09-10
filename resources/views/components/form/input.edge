@@ -18,7 +18,9 @@
 >
 
 @if(flashMessages.has(`errors.${name}`))
-  @!form.error({ message: flashMessages.get(`errors.${name}`) })
+  @each(message in flashMessages.get(`errors.${name}`))
+    @!form.error({ message })
+  @end
 @end
 
 @if (name === 'password' && flashMessages.has('auth.errors.password'))
