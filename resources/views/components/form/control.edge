@@ -1,0 +1,5 @@
+@inject({ id, required })
+
+<label for="{{ id }}" class="flex flex-col space-y-2">
+  {{{ await $slots.main() }}}
+</label>

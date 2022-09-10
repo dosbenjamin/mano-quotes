@@ -1,0 +1,27 @@
+@layout('layouts/main')
+
+@set('title', 'Login')
+
+@section('body')
+  @auth({ action: '/login', title })
+    @slot('form')
+      @form.set()
+        @form.control({ id: 'email', required: true })
+          @!form.label({ text: 'Email' })
+          @!form.input({ type: 'email', name: 'email' })
+        @end
+
+        @form.control({ id: 'password', required: true })
+          @!form.label({ text: 'Password' })
+          @!form.input({ type: 'password', name: 'password' })
+        @end
+      @end
+
+      @!button({ text: 'Submit' })
+    @end
+
+    @slot('footer')
+      <a href="/register" class="">Create an account</a>
+    @end
+  @end
+@end

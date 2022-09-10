@@ -1,0 +1,22 @@
+<main class="flex h-full">
+  <aside class="w-1/2 bg-gray-900 p-8 flex items-end">
+    <span class="text-white text-6xl font-normal">Mano</span>
+  </aside>
+
+  <section class="relative grid place-items-center w-1/2">
+
+    <form
+      class="w-full max-w-sm space-y-8"
+      method="POST"
+      action="{{ action }}"
+      novalidate
+    >
+      <h1 class="text-3xl">{{ title }}</h1>
+      {{{ await $slots.form() }}}
+    </form>
+
+    <footer class="absolute bottom-4 left-4">
+      {{{ await $slots.footer() }}}
+    </footer>
+  </section>
+</main>

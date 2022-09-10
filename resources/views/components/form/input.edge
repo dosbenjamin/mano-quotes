@@ -1,0 +1,26 @@
+@set('placeholders', {
+  'email': 'john@doe.com',
+  'password': '*****'
+})
+
+<input
+  type="{{ type }}"
+  name="{{ name }}"
+  placeholder="{{ placeholders[e(type)] }}"
+  class="border-2 p-4 focus:outline-none uppercase bg-transparent"
+  @if($context.id || id)
+    id="{{ $context.id ?? id }}"
+  @end
+  @if(flashMessages.has(name))
+    value="{{ flashMessages.get(name) }}"
+  @end
+  {{ $context.required || required ? 'required' : '' }}
+>
+
+@if(flashMessages.has(`errors.${name}`))
+  @!form.error({ message: flashMessages.get(`errors.${name}`) })
+@end
+
+@if (name === 'password' && flashMessages.has('auth.errors.password'))
+  @!form.error({ message: flashMessages.get('auth.errors.password') })
+@end

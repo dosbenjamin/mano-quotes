@@ -1,0 +1,32 @@
+@layout('layouts/main')
+
+@set('title', 'Register')
+
+@section('body')
+  @auth({ action: '/register', title })
+    @slot('form')
+      @form.set()
+        @form.control({ id: 'email', required: true })
+          @!form.label({ text: 'Email' })
+          @!form.input({ type: 'email', name: 'email' })
+        @end
+
+        @form.control({ id: 'password', required: true })
+          @!form.label({ text: 'Password' })
+          @!form.input({ type: 'password', name: 'password' })
+        @end
+
+        @form.control({ id: 'password-confirmation', required: true })
+          @!form.label({ text: 'Confirm password' })
+          @!form.input({ type: 'password', name: 'password_confirmation' })
+        @end
+      @end
+
+      @!button({ text: 'Submit' })
+    @end
+
+    @slot('footer')
+      <a href="/login" class="">Login</a>
+    @end
+  @end
+@end

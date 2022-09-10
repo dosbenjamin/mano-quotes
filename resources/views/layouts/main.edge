@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }} - Mano</title>
+
+    <link rel="preload" href="/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+    <style>
+      @font-face {
+        font-family: 'Space Grotesk';
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+        src: url(/SpaceGrotesk-Regular.woff2) format('woff2');
+      }
+    </style>
+
+    @entryPointStyles('app')
+    @entryPointScripts('app')
+  </head>
+
+  <body class="antialiased [text-rendering:optimizeLegibility] h-screen uppercase leading-none font-sans text-gray-900 bg-gray-450">
+    @!section('body')
+  </body>
+
+</html>
