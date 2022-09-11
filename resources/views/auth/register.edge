@@ -26,7 +26,9 @@
     @end
 
     @slot('footer')
-      <a href="{{ route('login-form') }}">Login</a>
+      @link({ href: route('login-form') })
+        Login
+      @end
     @end
   @end
 @end
