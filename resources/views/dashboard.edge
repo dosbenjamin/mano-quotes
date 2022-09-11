@@ -1,0 +1,11 @@
+@layout('layouts/main')
+
+@set('title', 'Dashboard')
+
+@section('body')
+  @container()
+    @slot('header')
+      @include('partials/header')
+    @end
+  @end
+@end

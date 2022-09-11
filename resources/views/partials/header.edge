@@ -1,0 +1,19 @@
+<header class="flex items-start">
+  <h1 class="text-3xl">{{ title }}</h1>
+  <nav class="ml-16 space-y-2">
+    @each(link in menu)
+      @link({ className: 'block text-2xl', href: link.url })
+        {{ link.text }}
+      @end
+    @end
+  </nav>
+  <div class="ml-auto flex items-center">
+    {{ auth.user.email }}
+    @link({
+      className: 'ml-2 before:content-[\'|\'] before:mr-2',
+      href: route('logout')
+    })
+      Logout
+    @end
+  </div>
+</header>
