@@ -22,11 +22,11 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'HomeController.index')
 
-Route.get('/login', 'AuthController.showLoginForm')
-Route.get('/register', 'AuthController.showRegisterForm')
-Route.get('/logout', 'AuthController.logout')
-Route.post('/login', 'AuthController.login')
-Route.post('/register', 'AuthController.register')
+Route.get('/login', 'AuthController.showLoginForm').as('login-form')
+Route.get('/register', 'AuthController.showRegisterForm').as('register-form')
+Route.get('/logout', 'AuthController.logout').as('logout')
+Route.post('/login', 'AuthController.login').as('login')
+Route.post('/register', 'AuthController.register').as('register')
 
 Route
   .group(() => {

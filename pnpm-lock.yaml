@@ -18,6 +18,7 @@ specifiers:
   eslint-config-prettier: ^8.5.0
   eslint-plugin-adonis: ^2.1.0
   eslint-plugin-prettier: ^4.2.1
+  htmx.org: ^1.8.0
   luxon: ^3.0.3
   pg: ^8.8.0
   phc-argon2: ^1.1.3
@@ -40,6 +41,7 @@ dependencies:
   '@adonisjs/session': 6.4.0_@adonisjs+core@5.8.6
   '@adonisjs/shield': 7.1.0_5dyafs4yvzt62wo266m3ecanbu
   '@adonisjs/view': 6.2.0_@adonisjs+core@5.8.6
+  htmx.org: 1.8.0
   luxon: 3.0.3
   pg: 8.8.0
   phc-argon2: 1.1.3
@@ -5212,6 +5214,10 @@ packages:
       domutils: 2.8.0
       entities: 2.2.0
     dev: true
+
+  /htmx.org/1.8.0:
+    resolution: {integrity: sha512-xdR2PeSmhftFhUKn/5DYDFRVF8DagJR9d7y3AK+gQzoAQ+08r+0shaCTo1HdXKGKhRfX/uL3rqj4ZwCBNf8tLw==}
+    dev: false
 
   /http-deceiver/1.2.7:
     resolution: {integrity: sha512-LmpOGxTfbpgtGVxJrj5k7asXHCgNZp5nLfp+hWc8QQRqtb7fUy6kRY3BO1h9ddF6yIPYUARgxGOwB42DnxIaNw==}

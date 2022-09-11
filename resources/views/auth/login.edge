@@ -3,7 +3,7 @@
 @set('title', 'Login')
 
 @section('body')
-  @auth({ action: '/login', title })
+  @auth({ action: route('login'), title })
     @slot('form')
       @form.set()
         @form.control({ id: 'email', required: true })
@@ -21,7 +21,7 @@
     @end
 
     @slot('footer')
-      <a href="/register" class="">Create an account</a>
+      <a href="{{ route('register-form') }}">Create an account</a>
     @end
   @end
 @end
