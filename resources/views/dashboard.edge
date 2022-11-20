@@ -3,9 +3,5 @@
 @set('title', 'Dashboard')
 
 @section('body')
-  @container()
-    @slot('header')
-      @include('partials/header')
-    @end
-  @end
+  @!container({ title })
 @end
