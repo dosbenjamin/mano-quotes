@@ -1,6 +1,15 @@
-<a
-  href="{{ href }}"
-  class="hover:underline {{ className || '' }}"
+@set('tag', as ?? 'a')
+
+<{{ tag }}
+  class="uppercase hover:underline {{ className ?? '' }}"
+
+  @if(type)
+    type="{{ type }}"
+  @end
+
+  @if(href)
+    href="{{ href }}"
+  @end
 >
    {{{ await $slots.main() }}}
-</a>
+</{{ tag }}>
