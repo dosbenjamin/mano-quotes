@@ -3,7 +3,7 @@
 @set('title', 'Login')
 
 @section('body')
-  @auth({ action: route('login'), title })
+  @auth.container({ action: route('login'), title })
     @slot('form')
       @form.set()
         @form.control({ id: 'email', required: true })
