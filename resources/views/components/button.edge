@@ -1,8 +1,20 @@
-<button
-  class="bg-gray-900 text-white p-4 uppercase block w-full"
+@set('colors', {
+  'black': 'bg-gray-900 text-white',
+  'red': 'bg-red text-white'
+})
+
+@set('tag', as ?? 'button')
+
+<{{ tag }}
+  class="p-4 uppercase block text-center {{ colors[color ?? 'black'] }} {{ className ?? '' }}"
+
   @if(type)
     type="{{ type }}"
   @end
+
+  @if(href)
+    href="{{ href }}"
+  @end
 >
-  {{ text }}
-</button>
+  {{{ await $slots.main() }}}
+</{{ tag }}>
