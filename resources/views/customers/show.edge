@@ -1,0 +1,32 @@
+@layout('layouts/main')
+
+@set('title', customer.name)
+
+@section('body')
+  @container({ title })
+    <section class="max-w-3xl">
+      <h2 class="text-2xl">Informations</h2>
+      <ul class="space-y-2 mt-4">
+        <li>Name: {{ customer?.name }}</li>
+        <li>Email: {{ customer?.email }}</li>
+        <li>VAT: {{ customer?.vat }}</li>
+        <li>Phone: {{ customer?.phone }}</li>
+        <li>Street: {{ customer?.street }}</li>
+        <li>Number: {{ customer?.number }}</li>
+        <li>City: {{ customer?.city }}</li>
+        <li>Zipcode: {{ customer?.zip }}</li>
+        <li>Country: {{ customer?.country }}</li>
+      </ul>
+      <footer class="flex items-center mt-8">
+        @button({ as: 'a', href: route('customers.edit', [customer.id]) })
+          Edit
+        @end
+        <form method="POST" class="ml-2" action="{{ route('customers.destroy', [customer.id], { qs: { _method: 'DELETE' } }) }}">
+          @button({ color: 'red' })
+            Delete
+          @end
+        </form>
+      </footer>
+    </section>
+  @end
+@end

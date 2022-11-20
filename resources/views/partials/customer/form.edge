@@ -1,0 +1,101 @@
+<section class="max-w-3xl">
+  <form class="grid grid-cols-2 gap-4" method="POST" action="{{ action }}" novalidate id="save-customer">
+    @form.control({ id: 'name', required: true })
+      @!form.label({ text: 'Nom' })
+      @!form.input({
+        type: 'text',
+        name: 'name',
+        placeholder: 'John Doe',
+        value: customer?.name
+      })
+    @end
+    @form.control({ id: 'email', required: true })
+      @!form.label({ text: 'Email' })
+      @!form.input({
+        type: 'email',
+        name: 'email',
+        value: customer?.email
+      })
+    @end
+    @form.control({ id: 'vat', required: true })
+      @!form.label({ text: 'V.A.T number' })
+      @!form.input({
+        type: 'text',
+        name: 'vat',
+        placeholder: 'BE1234567890',
+        value: customer?.vat
+      })
+    @end
+    @form.control({ id: 'phone', required: true })
+      @!form.label({ text: 'Phone' })
+      @!form.input({
+        type: 'tel',
+        name: 'phone',
+        placeholder: '1234567890',
+        value: customer?.phone
+      })
+    @end
+    @form.control({ id: 'street', required: true })
+      @!form.label({ text: 'Street' })
+      @!form.input({
+        type: 'text',
+        name: 'street',
+        placeholder: 'Main street',
+        value: customer?.street
+      })
+    @end
+    @form.control({ id: 'number', required: true })
+      @!form.label({ text: 'Number' })
+      @!form.input({
+        type: 'text',
+        name: 'number',
+        placeholder: '1A',
+        value: customer?.number
+      })
+    @end
+    @form.control({ id: 'city', required: true })
+      @!form.label({ text: 'City' })
+      @!form.input({
+        type: 'text',
+        name: 'city',
+        placeholder: 'Brussels',
+        value: customer?.city
+      })
+    @end
+    @form.control({ id: 'zip', required: true })
+      @!form.label({ text: 'Zip code' })
+      @!form.input({
+        type: 'text',
+        name: 'zip',
+        placeholder: '1000',
+        value: customer?.zip
+      })
+    @end
+    @form.control({ id: 'country', required: true })
+      @!form.label({ text: 'Country' })
+      @!form.input({
+        type: 'text',
+        name: 'country',
+        placeholder: 'Belgium',
+        value: customer?.country
+      })
+    @end
+  </form>
+
+  @if(customer?.id)
+    <footer class="flex mt-8">
+      <form class="w-1/2" method="POST" action="{{ route('customers.destroy', [customer.id], { qs: { _method: 'DELETE' } }) }}">
+        @button({ color: 'red', className: 'w-full' })
+          Delete
+        @end
+      </form>
+      @button({ className: 'w-1/2 ml-4', form: 'save-customer' })
+        Update
+      @end
+    </footer>
+  @else
+    @button({ className: 'mt-8 w-full' })
+      Create
+    @end
+  @end
+</section>

@@ -1,0 +1,10 @@
+@layout('layouts/main')
+
+@set('title', `Edit ${customer.name}`)
+@set('action', route('customers.update', [customer.id], { qs: { _method: 'PUT' } }))
+
+@section('body')
+  @container({ title })
+    @include('partials/customer/form')
+  @end
+@end

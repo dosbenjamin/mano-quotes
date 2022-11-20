@@ -6,14 +6,20 @@
 <input
   type="{{ type }}"
   name="{{ name }}"
-  placeholder="{{ placeholders[e(type)] }}"
   class="border-2 p-4 focus:outline-none uppercase bg-transparent"
+
+  @if(placeholders[e(type)] || placeholder)
+    placeholder="{{ placeholders[e(type)] ?? placeholder }}"
+  @end
+
   @if($context.id || id)
     id="{{ $context.id ?? id }}"
   @end
-  @if(flashMessages.has(name))
-    value="{{ flashMessages.get(name) }}"
+
+  @if(flashMessages.has(name) || value)
+    value="{{ flashMessages.get(name) ?? value }}"
   @end
+
   {{ $context.required || required ? 'required' : '' }}
 >
 

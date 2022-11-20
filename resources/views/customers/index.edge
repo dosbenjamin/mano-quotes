@@ -1,0 +1,36 @@
+@layout('layouts/main')
+
+@set('title', 'Customers')
+
+@section('body')
+  @container({ title })
+    @if(customers.length)
+      <ul class="max-w-2xl">
+        @each(customer in customers)
+          <li class="flex space-x-2 py-1 first:pt-0">
+            <h2 class="w-full">
+              @link({
+                href: route('customers.show', [customer.id]),
+                className: 'p-4 flex items-center bg-gray-900/5'
+              })
+                {{ customer.name }}
+              @end
+            </h2>
+            <div class="flex space-x-2">
+              @button({ as: 'a', href: route('customers.edit', [customer.id]) })
+                Edit
+              @end
+              <form method="POST" action="{{ route('customers.destroy', [customer.id], { qs: { _method: 'DELETE' } }) }}">
+                @button({ color: 'red' })
+                  Delete
+                @end
+              </form>
+            </div>
+          </li>
+        @end
+      </ul>
+    @else
+      <p class="text-xl">There is no customers.</p>
+    @end
+  @end
+@end

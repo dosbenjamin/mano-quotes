@@ -6,8 +6,8 @@ View.global('menu', [
     text: 'Get customers',
   },
   {
-    url: '/customers/add',
-    text: 'Add a customer',
+    url: '/customers/create',
+    text: 'Create a customer',
   },
   {
     url: '/estimates',

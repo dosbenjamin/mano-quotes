@@ -30,6 +30,7 @@ Route.post('/register', 'AuthController.register').as('register')
 
 Route
   .group(() => {
-    Route.get('/dashboard', 'DashboardController.index')
+    Route.get('/dashboard', 'DashboardController.index').as('dashboard')
+    Route.resource('customers', 'CustomersController')
   })
   .middleware('auth')

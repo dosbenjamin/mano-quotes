@@ -1,0 +1,10 @@
+@layout('layouts/main')
+
+@set('title', 'Add a customer')
+@set('action', route('customers.store'))
+
+@section('body')
+  @container({ title })
+    @include('partials/customer/form')
+  @end
+@end
