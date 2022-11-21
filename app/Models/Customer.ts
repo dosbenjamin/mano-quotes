@@ -1,5 +1,6 @@
-import { BaseModel, belongsTo, type BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, type BelongsTo, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import type { DateTime } from 'luxon'
+import Quote from './Quote'
 import User from './User'
 
 export default class Customer extends BaseModel {
@@ -33,11 +34,14 @@ export default class Customer extends BaseModel {
   @column()
   public country: string
 
+  @column()
+  public userId: number
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @column()
-  public userId: number
+  @hasMany(() => Quote)
+  public quotes: HasMany<typeof Quote>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
