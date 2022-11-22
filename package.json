@@ -63,6 +63,7 @@
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.0",
     "@adonisjs/view": "^6.2.0",
+    "alpinejs": "^3.10.5",
     "htmx.org": "^1.8.0",
     "luxon": "^3.0.3",
     "pg": "^8.8.0",
