@@ -10,6 +10,10 @@
   @if(href)
     href="{{ href }}"
   @end
+
+  @if(bindings?.['@click'])
+    @click="{{ bindings['@click'] }}"
+  @end
 >
    {{{ await $slots.main() }}}
 </{{ tag }}>

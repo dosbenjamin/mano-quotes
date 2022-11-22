@@ -5,15 +5,30 @@
 
 <input
   type="{{ type }}"
-  name="{{ name }}"
-  class="border-2 p-4 focus:outline-none uppercase bg-transparent"
+  class="border-2 p-4 focus:outline-none uppercase bg-transparent {{ className ?? '' }}"
 
   @if(placeholders[e(type)] || placeholder)
     placeholder="{{ placeholders[e(type)] ?? placeholder }}"
   @end
 
+  @if(name)
+    name="{{ name }}"
+  @end
+
   @if($context.id || id)
     id="{{ $context.id ?? id }}"
+  @end
+
+  @if(bindings?.[':name'])
+    :name="{{ bindings[':name'] }}"
+  @end
+
+  @if(min)
+    min="{{ min }}"
+  @end
+
+  @if(max)
+    max="{{ max }}"
   @end
 
   @if(flashMessages.has(name) || value)
