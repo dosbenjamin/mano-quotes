@@ -10,7 +10,7 @@ export default class Service extends BaseModel {
   public name: string
 
   @column()
-  public quantity: string
+  public quantity: number
 
   @column()
   public vat: number
