@@ -26,26 +26,34 @@ export default class CustomersController {
     response.redirect().toRoute(CustomerRoutes.SHOW, [customer.id])
   }
 
-  public async show({ view, params }: HttpContextContract): Promise<string> {
+  public async show({ view, params, bouncer }: HttpContextContract): Promise<string> {
     const customer = await this.customerRepository.find(params.id)
+    await bouncer.with('CustomerPolicy').authorize('view', customer)
 
     return view.render(CustomerViews.SHOW, { customer })
   }
 
-  public async edit({ view, params }: HttpContextContract): Promise<string> {
+  public async edit({ view, params, bouncer }: HttpContextContract): Promise<string> {
     const customer = await this.customerRepository.find(params.id)
+    await bouncer.with('CustomerPolicy').authorize('view', customer)
 
     return view.render(CustomerViews.EDIT, { customer })
   }
 
-  public async update({ request, response, params }: HttpContextContract): Promise<void> {
+  public async update({ request, response, params, bouncer }: HttpContextContract): Promise<void> {
+    const customer = await this.customerRepository.find(params.id)
+    await bouncer.with('CustomerPolicy').authorize('update', customer)
+
     const payload = await request.validate(UpdateCustomerValidator)
     await this.customerRepository.update(params.id, payload)
 
     response.redirect().toRoute(CustomerRoutes.SHOW, [params.id])
   }
 
-  public async destroy({ response, params }: HttpContextContract): Promise<void> {
+  public async destroy({ response, params, bouncer }: HttpContextContract): Promise<void> {
+    const customer = await this.customerRepository.find(params.id)
+    await bouncer.with('CustomerPolicy').authorize('delete', customer)
+
     await this.customerRepository.delete(params.id)
 
     response.redirect().toRoute(CustomerRoutes.INDEX)
