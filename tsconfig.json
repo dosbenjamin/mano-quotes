@@ -33,7 +33,8 @@
       "@adonisjs/shield",
       "@japa/preset-adonis/build/adonis-typings",
       "@adonisjs/auth",
-      "@adonisjs/lucid"
+      "@adonisjs/lucid",
+      "@adonisjs/bouncer"
     ]
   }
 }
