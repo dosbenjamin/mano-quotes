@@ -1,56 +1,53 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Customer from '../../Models/Customer'
 import CreateCustomerValidator from '../../Validators/CreateCustomerValidator'
 import UpdateCustomerValidator from '../../Validators/UpdateCustomerValidator'
 import CustomerRepository from '../../Repositories/CustomerRepository'
+import { inject } from '@adonisjs/core/build/standalone'
+import { CustomerRoutes, CustomerViews } from '../../Enums/CustomerEnums'
 
+@inject()
 export default class CustomersController {
-  public async index({ view, auth }: HttpContextContract) {
-    const customers = await CustomerRepository.findAllByUser(auth.user.id)
+  constructor(private customerRepository: CustomerRepository) {}
 
-    return view.render('customers/index', { customers })
+  public async index({ view, auth }: HttpContextContract): Promise<string> {
+    const customers = await this.customerRepository.findAllBy({ userId: auth.user.id })
+
+    return view.render(CustomerViews.INDEX, { customers })
   }
 
-  public create({ view }: HttpContextContract) {
-    return view.render('customers/create')
+  public async create({ view }: HttpContextContract): Promise<string> {
+    return view.render(CustomerViews.CREATE)
   }
 
-  public async store({ response, request, auth }: HttpContextContract) {
+  public async store({ response, request, auth }: HttpContextContract): Promise<void> {
     const payload = await request.validate(CreateCustomerValidator)
+    const customer = await this.customerRepository.create({ ...payload, userId: auth.user.id })
 
-    const { id } = await Customer.create({
-      ...payload,
-      userId: auth.user.id
-    })
-
-    response.redirect().toRoute('customers.show', [id])
+    response.redirect().toRoute(CustomerRoutes.SHOW, [customer.id])
   }
 
-  public async show({ view, params, auth }: HttpContextContract) {
-    const customer = await CustomerRepository.findByUserAndId(auth.user.id, params.id)
+  public async show({ view, params }: HttpContextContract): Promise<string> {
+    const customer = await this.customerRepository.find(params.id)
 
-    return view.render('customers/show', { customer })
+    return view.render(CustomerViews.SHOW, { customer })
   }
 
-  public async edit({ view, params, auth }: HttpContextContract) {
-    const customer = await CustomerRepository.findByUserAndId(auth.user.id, params.id)
+  public async edit({ view, params }: HttpContextContract): Promise<string> {
+    const customer = await this.customerRepository.find(params.id)
 
-    return view.render('customers/edit', { customer })
+    return view.render(CustomerViews.EDIT, { customer })
   }
 
-  public async update({ request, response, params, auth }: HttpContextContract) {
+  public async update({ request, response, params }: HttpContextContract): Promise<void> {
     const payload = await request.validate(UpdateCustomerValidator)
+    await this.customerRepository.update(params.id, payload)
 
-    const customer = await CustomerRepository.findByUserAndId(auth.user.id, params.id)
-    await customer.merge(payload).save()
-
-    response.redirect().toRoute('customers.show', [customer.id])
+    response.redirect().toRoute(CustomerRoutes.SHOW, [params.id])
   }
 
-  public async destroy({ response, params, auth }: HttpContextContract) {
-    const customer = await CustomerRepository.findByUserAndId(auth.user.id, params.id)
-    await customer.delete()
+  public async destroy({ response, params }: HttpContextContract): Promise<void> {
+    await this.customerRepository.delete(params.id)
 
-    response.redirect().toRoute('customers.index')
+    response.redirect().toRoute(CustomerRoutes.INDEX)
   }
 }
