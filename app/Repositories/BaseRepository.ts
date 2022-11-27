@@ -1,7 +1,7 @@
 import type { ModelAttributes, LucidModel } from '@ioc:Adonis/Lucid/Orm'
 import type { BaseRepositoryInterface } from './Interfaces/BaseRepositoryInterface'
 
-export abstract class BaseRepository <Model extends LucidModel> implements BaseRepositoryInterface<Model> {
+export default abstract class BaseRepository <Model extends LucidModel> implements BaseRepositoryInterface<Model> {
   protected readonly model: Model
 
   public async findAll(): Promise<InstanceType<Model>[]> {
@@ -10,8 +10,8 @@ export abstract class BaseRepository <Model extends LucidModel> implements BaseR
 
   public async findAllBy(descriptor: Partial<ModelAttributes<InstanceType<Model>>>): Promise<InstanceType<Model>[]> {
     return this.model
-    .query()
-    .where(descriptor)
+      .query()
+      .where(descriptor)
   }
 
   public async find(id: number): Promise<InstanceType<Model>> {
@@ -20,9 +20,9 @@ export abstract class BaseRepository <Model extends LucidModel> implements BaseR
 
   public async findBy(descriptor: Partial<ModelAttributes<InstanceType<Model>>>): Promise<InstanceType<Model>> {
     return this.model
-    .query()
-    .where(descriptor)
-    .firstOrFail()
+      .query()
+      .where(descriptor)
+      .firstOrFail()
   }
 
   public async create(payload: Partial<ModelAttributes<InstanceType<Model>>>): Promise<InstanceType<Model>> {
