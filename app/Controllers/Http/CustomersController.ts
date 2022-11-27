@@ -35,7 +35,7 @@ export default class CustomersController {
 
   public async edit({ view, params, bouncer }: HttpContextContract): Promise<string> {
     const customer = await this.customerRepository.find(params.id)
-    await bouncer.with('CustomerPolicy').authorize('view', customer)
+    await bouncer.with('CustomerPolicy').authorize('update', customer)
 
     return view.render(CustomerViews.EDIT, { customer })
   }
@@ -45,7 +45,7 @@ export default class CustomersController {
     await bouncer.with('CustomerPolicy').authorize('update', customer)
 
     const payload = await request.validate(UpdateCustomerValidator)
-    await this.customerRepository.update(params.id, payload)
+    await customer.merge(payload).save()
 
     response.redirect().toRoute(CustomerRoutes.SHOW, [params.id])
   }
@@ -54,7 +54,7 @@ export default class CustomersController {
     const customer = await this.customerRepository.find(params.id)
     await bouncer.with('CustomerPolicy').authorize('delete', customer)
 
-    await this.customerRepository.delete(params.id)
+    await customer.delete()
 
     response.redirect().toRoute(CustomerRoutes.INDEX)
   }
