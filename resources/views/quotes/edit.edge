@@ -1,0 +1,10 @@
+@layout('layouts/main')
+
+@set('title', 'Edit a quote')
+@set('action', route('quotes.update', [quote.id], { qs: { _method: 'PUT' } }))
+
+@section('body')
+  @container({ title })
+    @include('partials/quotes/form')
+  @end
+@end

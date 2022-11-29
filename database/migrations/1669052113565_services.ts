@@ -11,8 +11,8 @@ export default class extends BaseSchema {
       table.float('vat').notNullable()
       table.float('price_without_vat').notNullable()
       table.float('price_with_vat').notNullable()
-      table.integer('quote_id').notNullable()
-      table.foreign('quote_id').references('quotes.id')
+      table.uuid('uuid').notNullable()
+      table.integer('quote_id').references('quotes.id').notNullable().onDelete('CASCADE')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

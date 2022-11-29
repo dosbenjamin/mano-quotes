@@ -1,0 +1,10 @@
+@layout('layouts/main')
+
+@set('title', 'Create a quote')
+@set('action', route('quotes.store'))
+
+@section('body')
+  @container({ title })
+    @include('partials/quotes/form')
+  @end
+@end

@@ -15,8 +15,7 @@ export default class extends BaseSchema {
       table.string('city')
       table.string('zip')
       table.string('country')
-      table.integer('user_id').notNullable()
-      table.foreign('user_id').references('users.id')
+      table.integer('user_id').references('users.id').notNullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

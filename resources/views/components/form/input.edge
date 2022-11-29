@@ -23,6 +23,14 @@
     :name="{{ bindings[':name'] }}"
   @end
 
+  @if(bindings?.['x-model'])
+    @if(type === 'number')
+      x-model.number="{{ bindings['x-model'] }}"
+    @else
+      x-model="{{ bindings['x-model'] }}"
+    @end
+  @end
+
   @if(min)
     min="{{ min }}"
   @end

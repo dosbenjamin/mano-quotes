@@ -22,6 +22,9 @@ export default class Service extends BaseModel {
   public priceWithVat: number
 
   @column()
+  public uuid: string
+
+  @column()
   public quoteId: number
 
   @belongsTo(() => Quote)

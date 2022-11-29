@@ -32,5 +32,6 @@ Route
   .group(() => {
     Route.get('/dashboard', 'DashboardController.index').as('dashboard')
     Route.resource('customers', 'CustomersController')
+    Route.resource('quotes', 'QuotesController')
   })
   .middleware('auth')

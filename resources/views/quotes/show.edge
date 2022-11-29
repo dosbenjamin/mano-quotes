@@ -1,0 +1,44 @@
+@layout('layouts/main')
+
+@set('title', 'Quote')
+
+@section('body')
+  @container({ title })
+    <section class="max-w-3xl space-y-8">
+      <div>
+        <h2 class="text-2xl">Informations</h2>
+        <ul class="space-y-2 mt-4">
+          <li>
+            Customer:
+            @link({ href: route('customers.show', [quote.customer.id]) })
+              {{ quote.customer.name }}
+            @end
+          <li>Name: {{ quote.name }}</li>
+          @if(quote.description)
+            <li>Description: {{ quote.description }}</li>
+          @end
+          <li>Price excl. tax: {{ quote.priceWithoutVat }}</li>
+          <li>Price incl. tax: {{ quote.priceWithVat }}</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-2xl">Services</h2>
+        <ul class="space-y-2 mt-4">
+          @each(service in quote.services)
+            <li>{{ service.quantity }} x {{ service.name }} - VAT: {{ service.vat }} - Price excl. tax: {{ service.priceWithoutVat }} - Price incl. tax: {{ service.priceWithVat }}</li>
+          @end
+        </ul>
+      </div>
+      <footer class="flex items-center">
+        @button({ as: 'a', href: route('quotes.edit', [quote.id]) })
+          Edit
+        @end
+        <form method="POST" class="ml-2" action="{{ route('quotes.destroy', [quote.id], { qs: { _method: 'DELETE' } }) }}">
+          @button({ color: 'red' })
+            Delete
+          @end
+        </form>
+      </footer>
+    </section>
+  @end
+@end

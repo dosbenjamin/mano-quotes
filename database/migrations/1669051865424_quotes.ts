@@ -10,10 +10,8 @@ export default class extends BaseSchema {
       table.string('description')
       table.float('price_without_vat').notNullable()
       table.float('price_with_vat').notNullable()
-      table.integer('user_id').notNullable()
-      table.foreign('user_id').references('users.id')
-      table.integer('customer_id').notNullable()
-      table.foreign('customer_id').references('customers.id')
+      table.integer('user_id').references('users.id').notNullable()
+      table.integer('customer_id').references('customers.id').notNullable().onDelete('CASCADE')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

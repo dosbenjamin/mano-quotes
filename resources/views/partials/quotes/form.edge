@@ -1,0 +1,160 @@
+<section
+  x-data="{ services: JSON.parse($refs.services.innerHTML).services, service: { name: null, quantity: 1, vat: 21, priceWithoutVat: null, priceWithVat: 0 }, totalPrices: { withoutVat: 0, withVat: 0 } }"
+  x-effect="totalPrices = services.reduce(({ withoutVat, withVat }, { priceWithoutVat, priceWithVat }) => ({ withoutVat: withoutVat + +priceWithoutVat, withVat: withVat + priceWithVat }), { withoutVat: 0, withVat: 0 })"
+>
+  <script x-ref="services" type="application/json">{ "services": {{{ stringify(flashMessages.get('services') ?? quote?.services ?? []) }}} }</script>
+  @if(quote?.id)
+    <form class="hidden" method="POST" action="{{ route('quotes.destroy', [quote.id], { qs: { _method: 'DELETE' } }) }}" id="delete-quote"></form>
+  @end
+  <form class="flex" method="POST" action="{{ action }}" novalidate id="save-customer">
+    <fieldset class="flex-1 max-w-3xl">
+      <div class="grid grid-cols-2 gap-4">
+        @form.control({ id: 'customer', required: true, className: 'col-span-2' })
+          @!form.label({ text: 'Customer' })
+          <select name="customerId" class="border-2 p-4 focus:outline-none uppercase bg-transparent">
+            @each(customer in customers)
+              <option value="{{ customer.id }}">{{ customer.name }}</option>
+            @end
+          </select>
+        @end
+        @form.control({ id: 'name', required: true, className: 'col-span-2' })
+          @!form.label({ text: 'Name' })
+          @!form.input({
+            type: 'text',
+            name: 'name',
+            value: quote?.name,
+            placeholder: 'Acme Corporation Website'
+          })
+        @end
+        @form.control({ id: 'description', required: true, className: 'col-span-2' })
+          @!form.label({ text: 'Description' })
+          @!form.input({
+            type: 'textarea',
+            name: 'description',
+            value: quote?.description,
+            placeholder: 'Additional informations'
+          })
+        @end
+        @form.control()
+          @!form.label({ text: 'Price without VAT' })
+          <input
+            readonly
+            class="p-4 bg-gray-900/5 text-center focus:outline-none"
+            name="priceWithoutVat"
+            :value="totalPrices.withoutVat"
+          >
+        @end
+        @form.control()
+          @!form.label({ text: 'Price with VAT' })
+          <input
+            readonly
+            class="p-4 bg-gray-900/5 text-center focus:outline-none"
+            name="priceWithVat"
+            :value="totalPrices.withVat"
+          >
+        @end
+      </div>
+      @if(quote?.id)
+        <div class="flex mt-8">
+          @button({ color: 'red', className: 'flex-1', form: 'delete-quote' })
+            Delete
+          @end
+          @button({ className: 'flex-1 ml-4' })
+            Update
+          @end
+        </div>
+      @else
+        @button({ className: 'w-full mt-8' })
+          Create
+        @end
+      @end
+    </fieldset>
+    <fieldset class="flex flex-col max-w-4xl flex-1 ml-4">
+      <legend>Services</legend>
+      <div class="flex-1">
+        <template x-if="services.length">
+          <ul class="space-y-2">
+            <template x-for="(service, index) in services">
+              <li class="flex space-x-2">
+                @!form.input({
+                  type: 'text',
+                  placeholder: 'Describe your service',
+                  className: 'flex-1',
+                  bindings: {
+                    ':name': '`services[${index}][name]`',
+                    'x-model': 'service.name'
+                  }
+                })
+                @!form.input({
+                  type: 'number',
+                  placeholder: 'Qty',
+                  className: 'w-24',
+                  min: 0,
+                  max: 100,
+                  bindings: {
+                    ':name': '`services[${index}][quantity]`',
+                    'x-model': 'service.quantity'
+                  }
+                })
+                @!form.input({
+                  type: 'number',
+                  placeholder: 'VAT',
+                  className: 'w-24',
+                  min: 0,
+                  max: 100,
+                  bindings: {
+                    ':name': '`services[${index}][vat]`',
+                    'x-model': 'service.vat'
+                  }
+                })
+                @!form.input({
+                  type: 'number',
+                  placeholder: 'Price excl tax',
+                  className: 'w-48',
+                  min: 0,
+                  max: 100,
+                  bindings: {
+                    ':name': '`services[${index}][priceWithoutVat]`',
+                    'x-model': 'service.priceWithoutVat'
+                  }
+                })
+                <input
+                  readonly
+                  class="w-24 bg-gray-900/5 text-center focus:outline-none"
+                  :name="`services[${index}][priceWithVat]`"
+                  :value="service.priceWithVat = +service.quantity * (+service.priceWithoutVat + ((+service.priceWithoutVat / 100) * +service.vat))"
+                >
+                <input type="hidden" :name="`services[${index}][uuid]`" :value="service.uuid ?? crypto.randomUUID()">
+                @if(quote?.id)
+                  <input type="hidden" :name="`services[${index}][id]`" :value="service.id">
+                @end
+                @button({
+                  color: 'red',
+                  type: 'button',
+                  bindings: {
+                    '@click': 'services = services.filter((_, idx) => idx !== index)'
+                  }
+                })
+                  Delete
+                @end
+              </li>
+            </template>
+          </ul>
+        </template>
+        <template x-if="!services.length">
+          <p class="text-xl h-full grid place-content-center">No services added</p>
+          {{ inspect(flashMessages.get('errors')) }}
+        </template>
+      </div>
+      @button({
+        type: 'button',
+        className: 'mt-8',
+        bindings: {
+          '@click': 'services = [...services, { ...service }]'
+        }
+      })
+        Add a service
+      @end
+    </fieldset>
+  </form>
+</section>

@@ -10,11 +10,11 @@ View.global('menu', [
     text: 'Create a customer',
   },
   {
-    url: '/estimates',
-    text: 'Get estimates',
+    url: '/quotes',
+    text: 'Get quotes',
   },
   {
-    url: '/estimates/create',
-    text: 'Create an estimate',
+    url: '/quotes/create',
+    text: 'Create a quote',
   }
 ])
